@@ -19,6 +19,7 @@
 
     body {
       padding-top: 70px; /* space for fixed navbar */
+      flex: 1;
     }
 
     .navbar-brand {
@@ -26,41 +27,27 @@
     }
 
     .blog-post {
-      background: #fff;
-      padding: 25px;
-      margin-bottom: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .blog-post:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     footer {
-      margin-top: auto;
-      background: #222;
+      background-color: #222;
       color: #fff;
       padding: 40px 0 20px 0;
+      flex-shrink: 0; /* footer won't shrink */
     }
 
     footer a {
       color: #fff;
       text-decoration: none;
-      transition: 0.2s;
     }
 
     footer a:hover {
       color: #0d6efd;
-    }
-
-    /* Responsive Blog Posts */
-    @media (max-width: 768px) {
-      .blog-post {
-        padding: 20px;
-      }
     }
   </style>
 </head>
@@ -78,7 +65,7 @@
           <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-graduation-cap"></i> Courses</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-book"></i> Tutorials</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-blog"></i> Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-blog"></i> Blog</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sticky-note"></i> Notes</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
@@ -116,7 +103,6 @@
       <p>Fusce et lectus sit amet orci fringilla tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</p>
       <a href="#" class="btn btn-primary btn-sm">Read More</a>
     </div>
-    <!-- Add more blog posts here -->
   </main>
 
   <!-- Footer Section -->
@@ -174,11 +160,7 @@
       blogPosts.forEach(post => {
         const title = post.querySelector('h3').textContent.toLowerCase();
         const content = post.querySelector('p:not(.text-muted)').textContent.toLowerCase();
-        if (title.includes(lowerQuery) || content.includes(lowerQuery)) {
-          post.style.display = 'block';
-        } else {
-          post.style.display = 'none';
-        }
+        post.style.display = (title.includes(lowerQuery) || content.includes(lowerQuery)) ? 'block' : 'none';
       });
     }
 
