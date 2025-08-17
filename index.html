@@ -1,177 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MohitCodes - Blog</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      background-color: #f8f9fa;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, viewport-fit=cover">
+<title>MohitCodes - Home</title>
 
-    body {
-      padding-top: 70px; /* space for fixed navbar */
-      flex: 1;
-    }
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    .navbar-brand {
-      font-weight: bold;
-    }
+<!-- Typed.js -->
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 
-    .blog-post {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+<style>
+/* Reset and layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-    footer {
-      background-color: #222;
-      color: #fff;
-      padding: 40px 0 20px 0;
-      flex-shrink: 0; /* footer won't shrink */
-    }
+/* Navbar */
+.navbar-brand { font-weight: bold; font-size: 1.4rem; }
+.nav-link i { margin-right: 5px; }
+.navbar-nav .nav-item { margin-bottom: 0; }
 
-    footer a {
-      color: #fff;
-      text-decoration: none;
-    }
+/* Hero Section */
+.hero {
+  padding: 120px 20px;
+  text-align: center;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.hero.loaded { opacity: 1; }
+.hero h1 { font-weight: bold; font-size: 3rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+.hero h4 { font-size: 1.8rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.5); }
+.hero p { max-width: 800px; margin: 20px auto 0 auto; font-size: 1.1rem; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.5); }
 
-    footer a:hover {
-      color: #0d6efd;
-    }
-  </style>
+/* Features Section */
+.feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; border-radius: 12px; }
+.feature-card:hover { transform: translateY(-5px); box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1); }
+
+/* Footer */
+footer { margin-top: auto; padding: 30px 0; background: #222; color: #fff; }
+footer a { transition: opacity 0.2s ease; }
+footer a:hover { opacity: 0.8; text-decoration: none; color: #0d6efd; }
+
+/* Mobile Navigation */
+@media (max-width: 992px) {
+  .navbar-collapse { position: fixed; top:0; right:-100%; width:80%; max-width:300px; height:100vh; background:white; z-index:1050; padding:20px; transition:right 0.3s ease-in-out; overflow-y:auto; box-shadow:-5px 0 15px rgba(0,0,0,0.1); }
+  .navbar-collapse.show { right:0; }
+  .navbar-toggler { z-index:1060; position:relative; border:none; padding:0.5rem; background:transparent; }
+  .navbar-toggler .navbar-toggler-icon { background-image:none; position:relative; width:24px; height:24px; transition: all 0.3s ease; }
+  .navbar-toggler .navbar-toggler-icon::before, .navbar-toggler .navbar-toggler-icon::after { content:''; position:absolute; left:0; width:100%; height:2px; background-color:#333; transition: all 0.3s ease; }
+  .navbar-toggler .navbar-toggler-icon::before { top:6px; }
+  .navbar-toggler .navbar-toggler-icon::after { bottom:6px; }
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before { transform: rotate(45deg); top:11px; }
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after { transform: rotate(-45deg); bottom:11px; }
+  .navbar-backdrop { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1040; opacity:0; visibility:hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+  .navbar-backdrop.show { opacity:1; visibility:visible; }
+  .navbar-nav { margin-top:40px; }
+  .navbar-nav .nav-item { margin-bottom:15px; }
+}
+
+/* Responsive Hero & Features */
+@media (max-width: 992px) { .hero { padding:100px 15px; } .hero h1{font-size:2.5rem;} .hero h4{font-size:1.5rem;} .hero p{font-size:1rem;} }
+@media (max-width: 768px) { .hero { padding:80px 10px; } .hero h1{font-size:2rem;} .hero h4{font-size:1.2rem;} .hero p{font-size:0.95rem;} .feature-card i{font-size:2rem;} .feature-card h5{font-size:1rem;} footer .col-md-4{text-align:center;margin-bottom:2rem;} footer .d-flex{justify-content:center;} }
+@media (max-width: 576px) { .hero { padding:60px 10px; } .hero h1{font-size:1.8rem; line-height:1.3;} .hero h4{font-size:1.2rem;margin-bottom:1rem;} .hero p{font-size:0.9rem;margin-top:1rem;} .badge{font-size:0.7rem;padding:0.25rem 0.5rem;} .feature-card{padding:20px;} }
+</style>
 </head>
 <body>
 
-  <!-- Navbar/Header -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><i class="fas fa-code"></i> MohitCodes❤️</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-graduation-cap"></i> Courses</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-book"></i> Tutorials</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-blog"></i> Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sticky-note"></i> Notes</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+  <a class="navbar-brand" href="#"><i class="fas fa-code"></i> MohitCodes❤️</a>
+  <button class="navbar-toggler" type="button" id="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-backdrop"></div>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-graduation-cap"></i> Courses</a></li>
+      <li class="nav-item"><a class="nav-link" href="https://mohit-online63.netlify.app/"><i class="fas fa-book"></i> Tutorials</a></li>
+      <li class="nav-item"><a class="nav-link" href="https://mohit-blog63.netlify.app/"><i class="fas fa-blog"></i> Blog</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sticky-note"></i> Notes</a></li>
+      <li class="nav-item"><a class="nav-link" href="https://mohitoutlaw-63-63.netlify.app/"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
+    <form class="d-flex me-2 mb-2 mb-lg-0">
+      <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+    </form>
+    <a href="#" class="btn btn-outline-primary me-2 mb-2 mb-lg-0"><i class="fas fa-sign-in-alt"></i> Login</a>
+    <a href="#" class="btn btn-outline-secondary me-2 mb-2 mb-lg-0"><i class="fas fa-user-plus"></i> Signup</a>
+  </div>
+</nav>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero" id="heroSection">
+    <span class="badge bg-light text-dark px-3 py-2 mb-3">Learn coding the right way</span>
+    <h1>Welcome to <span class="text-primary">MohitCodes</span></h1>
+    <h4 class="text-secondary mb-4">Learn Machine Learning | Web Development | More</h4>
+    <p>Mohit <span id="element"></span></p>
+    <p class="lead">
+      Confused about which course to take? We've got you covered! Browse courses and discover the best option for you.
+      It's free! This is my effort to teach the basics and advanced coding techniques in a short time that took me years to master.
+    </p>
+  </section>
+
+  <!-- Features Section -->
+  <section class="container my-5">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Our Features</h2>
+      <p class="text-muted">Learn and grow with MohitCodes</p>
+    </div>
+    <div class="row g-4">
+      <!-- Feature Cards -->
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="card feature-card p-4 text-center shadow-sm">
+          <i class="fas fa-laptop-code fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">Interactive Coding</h5>
+          <p class="text-muted">Hands-on practice with live coding examples and exercises.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="card feature-card p-4 text-center shadow-sm">
+          <i class="fas fa-book-open fa-3x text-success mb-3"></i>
+          <h5 class="fw-bold">Comprehensive Tutorials</h5>
+          <p class="text-muted">Step-by-step guides for beginners to advanced developers.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="card feature-card p-4 text-center shadow-sm">
+          <i class="fas fa-users fa-3x text-warning mb-3"></i>
+          <h5 class="fw-bold">Community Support</h5>
+          <p class="text-muted">Join our community and get help from fellow learners.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="card feature-card p-4 text-center shadow-sm">
+          <i class="fas fa-chalkboard-teacher fa-3x text-danger mb-3"></i>
+          <h5 class="fw-bold">Expert Mentorship</h5>
+          <p class="text-muted">Get guidance from experienced professionals in the industry.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="card feature-card p-4 text-center shadow-sm">
+          <i class="fas fa-certificate fa-3x text-info mb-3"></i>
+          <h5 class="fw-bold">Certificates</h5>
+          <p class="text-muted">Earn certificates to showcase your skills and achievements.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="card feature-card p-4 text-center shadow-sm">
+          <i class="fas fa-mobile-alt fa-3x text-secondary mb-3"></i>
+          <h5 class="fw-bold">Mobile Friendly</h5>
+          <p class="text-muted">Learn anywhere, anytime with our mobile-optimized platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer Section -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold"><i class="fas fa-code"></i> MohitCodes</h5>
+        <p>Learn coding the right way! Join MohitCodes to master Web Development, ML, and more with tutorials, courses, and community support.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#"><i class="fas fa-home me-2"></i>Home</a></li>
+          <li><a href="#"><i class="fas fa-graduation-cap me-2"></i>Courses</a></li>
+          <li><a href="#"><i class="fas fa-book me-2"></i>Tutorials</a></li>
+          <li><a href="#"><i class="fas fa-blog me-2"></i>Blog</a></li>
+          <li><a href="#"><i class="fas fa-envelope me-2"></i>Contact</a></li>
         </ul>
-        <form class="d-flex me-2" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
-          <button class="btn btn-outline-primary" type="submit">Search</button>
-        </form>
-        <button class="btn btn-outline-primary me-2"><i class="fas fa-sign-in-alt"></i> Login</button>
-        <button class="btn btn-outline-secondary me-2"><i class="fas fa-user-plus"></i> Signup</button>
       </div>
-    </div>
-  </nav>
-
-  <!-- Blog Section -->
-  <main class="container my-4 flex-grow-1">
-    <h1 class="mb-4">Latest Blog Posts</h1>
-
-    <div class="blog-post">
-      <h3>Blog Post Title 1</h3>
-      <p class="text-muted">August 15, 2025 | Mohit</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla volutpat ex non leo facilisis, a pretium nulla pharetra.</p>
-      <a href="#" class="btn btn-primary btn-sm">Read More</a>
-    </div>
-
-    <div class="blog-post">
-      <h3>Blog Post Title 2</h3>
-      <p class="text-muted">August 10, 2025 | Mohit</p>
-      <p>Curabitur ac odio at mauris feugiat laoreet. Integer nec ligula at ligula elementum volutpat nec non nulla.</p>
-      <a href="#" class="btn btn-primary btn-sm">Read More</a>
-    </div>
-
-    <div class="blog-post">
-      <h3>Blog Post Title 3</h3>
-      <p class="text-muted">August 5, 2025 | Mohit</p>
-      <p>Fusce et lectus sit amet orci fringilla tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</p>
-      <a href="#" class="btn btn-primary btn-sm">Read More</a>
-    </div>
-  </main>
-
-  <!-- Footer Section -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <!-- About -->
-        <div class="col-md-4 mb-4">
-          <h5 class="fw-bold"><i class="fas fa-code"></i> MohitCodes</h5>
-          <p>Learn coding the right way! Join MohitCodes to master Web Development, ML, and more with tutorials, courses, and community support.</p>
-        </div>
-        <!-- Quick Links -->
-        <div class="col-md-4 mb-4">
-          <h5 class="fw-bold">Quick Links</h5>
-          <ul class="list-unstyled">
-            <li><a href="#"><i class="fas fa-home me-2"></i>Home</a></li>
-            <li><a href="#"><i class="fas fa-graduation-cap me-2"></i>Courses</a></li>
-            <li><a href="#"><i class="fas fa-book me-2"></i>Tutorials</a></li>
-            <li><a href="#"><i class="fas fa-blog me-2"></i>Blog</a></li>
-            <li><a href="#"><i class="fas fa-envelope me-2"></i>Contact</a></li>
-          </ul>
-        </div>
-        <!-- Contact & Social -->
-        <div class="col-md-4 mb-4">
-          <h5 class="fw-bold">Contact & Social</h5>
-          <p><i class="fas fa-envelope me-2"></i> info@mohitcodes.com</p>
-          <p><i class="fas fa-phone me-2"></i> +91 9876543210</p>
-          <div class="d-flex gap-3 mt-2">
-            <a href="#" class="fs-5"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="fs-5"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="fs-5"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="fs-5"><i class="fab fa-github"></i></a>
-          </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Contact & Social</h5>
+        <p><i class="fas fa-envelope me-2"></i> mohitoutlook.official@gmail.com</p>
+        <p><i class="fas fa-phone me-2"></i> +91 8873365815</p>
+        <div class="d-flex gap-3 mt-2">
+          <a href="#" class="text-light fs-5"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-light fs-5"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-light fs-5"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-light fs-5"><i class="fab fa-github"></i></a>
         </div>
       </div>
-      <hr class="bg-light">
-      <div class="text-center small">
-        &copy; 2026 Mohit Saxena. All rights reserved.<br>
-        Made with ❤️ Mohit Saxena
-      </div>
     </div>
-  </footer>
+    <hr class="bg-light">
+    <div class="text-center small">&copy; 2026 Mohit Saxena. All rights reserved.<br>Made with ❤️ Mohit Saxena</div>
+  </div>
+</footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Search functionality -->
-  <script>
-    const searchForm = document.querySelector('form[role="search"]');
-    const searchInput = searchForm.querySelector('input[type="search"]');
-    const blogPosts = document.querySelectorAll('.blog-post');
+<script>
+// Typed.js
+var typed = new Typed('#element', {
+  strings: ['<i>Hello</i> Coders!', 'Learn & Grow with MohitCodes 🚀', 'Festival Special Theme 🎉'],
+  typeSpeed: 50,
+  backSpeed: 30,
+  loop: true,
+  contentType: 'html'
+});
 
-    function filterPosts(query) {
-      const lowerQuery = query.toLowerCase();
-      blogPosts.forEach(post => {
-        const title = post.querySelector('h3').textContent.toLowerCase();
-        const content = post.querySelector('p:not(.text-muted)').textContent.toLowerCase();
-        post.style.display = (title.includes(lowerQuery) || content.includes(lowerQuery)) ? 'block' : 'none';
-      });
-    }
+// Festival Backgrounds
+const festivalBackgrounds = {
+  durga: "https://images.unsplash.com/photo-1600959907703-0c38de362f63?auto=format&fit=crop&w=1350&q=80",
+  diwali: "https://images.unsplash.com/photo-1572955303710-bbe68a1c37c1?auto=format&fit=crop&w=1350&q=80",
+  christmas: "https://images.unsplash.com/photo-1608889179860-4f84aa36c91a?auto=format&fit=crop&w=1350&q=80",
+  newyear: "https://images.unsplash.com/photo-1514854623362-f398f0e44c94?auto=format&fit=crop&w=1350&q=80",
+  default: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1350&q=80"
+};
 
-    searchForm.addEventListener('submit', e => {
-      e.preventDefault();
-      filterPosts(searchInput.value);
-    });
+function setFestivalBackground() {
+  const today = new Date();
+  const month = today.getMonth() + 1;
+  const day = today.getDate();
+  let bg = festivalBackgrounds.default;
 
-    searchInput.addEventListener('input', e => {
-      filterPosts(searchInput.value);
-    });
-  </script>
+  if (month === 10 && day >= 1 && day <= 10) bg = festivalBackgrounds.durga;
+  else if (month === 11 && day >= 1 && day <= 15) bg = festivalBackgrounds.diwali;
+  else if (month === 12 && day >= 20 && day <= 26) bg = festivalBackgrounds.christmas;
+  else if ((month === 12 && day === 31) || (month === 1 && day <= 2)) bg = festivalBackgrounds.newyear;
+
+  const hero = document.getElementById("heroSection");
+  // Load image first
+  const img = new Image();
+  img.src = bg;
+  img.onload = () => {
+    hero.style.background = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${bg}') center/cover no-repeat`;
+    hero.classList.add("loaded");
+  };
+}
+
+// Mobile Menu
+document.addEventListener('DOMContentLoaded', function() {
+  setFestivalBackground();
+
+  const navbarToggler = document.getElementById('navbarToggler');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+  const navbarBackdrop = document.querySelector('.navbar-backdrop');
+
+  function closeMenu() {
+    navbarToggler.setAttribute('aria-expanded', 'false');
+    navbarCollapse.classList.remove('show');
+    navbarBackdrop.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function openMenu() {
+    navbarToggler.setAttribute('aria-expanded', 'true');
+    navbarCollapse.classList.add('show');
+    navbarBackdrop.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  navbarToggler.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) closeMenu(); else openMenu();
+  });
+
+  navbarBackdrop.addEventListener('click', closeMenu);
+  document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', closeMenu));
+});
+</script>
 </body>
 </html>
